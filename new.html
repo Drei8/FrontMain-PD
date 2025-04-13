@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Body Measurement</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .webcam-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            aspect-ratio: 4/3;
+        }
+
+        #webcam-video {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+
+        .measurements-panel {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .measurements-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .measurement-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .measurement-label {
+            font-size: 0.9rem;
+            color: #ffffffaa;
+            margin-bottom: 0.5rem;
+        }
+
+        .measurement-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #7c8ff7;
+        }
+
+        .scan-button {
+            width: 100%;
+            padding: 1.2rem;
+            background: #7c8ff7;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 2rem;
+        }
+
+        .scan-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .scan-button:active {
+            transform: translateY(0);
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .measurements-panel {
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="webcam-container">
+            <video id="webcam-video" autoplay></video>
+        </div>
+        
+        <div class="measurements-panel">
+            <h1>Body Measurements</h1>
+            <div class="measurements-grid">
+                <div class="measurement-item">
+                    <div class="measurement-label">Chest</div>
+                    <div class="measurement-value" id="chest">--</div>
+                </div>
+                <div class="measurement-item">
+                    <div class="measurement-label">Waist</div>
+                    <div class="measurement-value" id="waist">--</div>
+                </div>
+                <div class="measurement-item">
+                    <div class="measurement-label">Hips</div>
+                    <div class="measurement-value" id="hips">--</div>
+                </div>
+                <div class="measurement-item">
+                    <div class="measurement-label">Inseam</div>
+                    <div class="measurement-value" id="inseam">--</div>
+                </div>
+                <div class="measurement-item">
+                    <div class="measurement-label">Shoulder</div>
+                    <div class="measurement-value" id="shoulder">--</div>
+                </div>
+                <div class="measurement-item">
+                    <div class="measurement-label">Arm Length</div>
+                    <div class="measurement-value" id="arm-length">--</div>
+                </div>
+            </div>
+            <button class="scan-button" onclick="generateRandomMeasurements()">Scan Body</button>
+        </div>
+    </div>
+
+    <script>
+        // Access webcam
+        async function setupWebcam() {
+            try {
+                const video = document.getElementById('webcam-video');
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                await new Promise(resolve => video.onloadedmetadata = resolve);
+                video.play();
+            } catch (err) {
+                alert("Error accessing webcam: " + err.message);
+            }
+        }
+
+        // Generate random measurements
+        function generateRandomMeasurements() {
+            const measurements = {
+                chest: randomInRange(85, 110),
+                waist: randomInRange(70, 100),
+                hips: randomInRange(90, 120),
+                inseam: randomInRange(70, 90),
+                shoulder: randomInRange(40, 50),
+                'arm-length': randomInRange(55, 65)
+            };
+
+            Object.entries(measurements).forEach(([id, value]) => {
+                document.getElementById(id).textContent = `${value} cm`;
+            });
+        }
+
+        function randomInRange(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        // Initialize webcam on load
+        window.addEventListener('load', setupWebcam);
+        
+        // Stop webcam when closing
+        window.addEventListener('beforeunload', () => {
+            const video = document.getElementById('webcam-video');
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+            }
+        });
+    </script>
+</body>
+</html>

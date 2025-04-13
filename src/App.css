@@ -1,0 +1,444 @@
+/* Define custom properties for the color palette */
+:root {
+  --color-bg: #FAFAFA;             /* App & content background */
+  --color-bg-card: #FFFFFF;         /* Card background */
+  --color-primary: #4AAE9B;         /* Primary accent */
+  --color-accent: #F19C79;          /* Optional accent */
+  --color-menu: #2E3B41;            /* Sidebar background */
+  --color-menu-hover: #405158;      /* Sidebar hover/active */
+  --color-text: #333333;            /* Primary text */
+  --color-hover-border: #3C907E;    /* Card hover border */
+}
+
+/* Basic reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Overall container */
+.app-container {
+  display: flex;
+  width: 1480px;
+  height: 720px;
+  font-family: 'Roboto', Arial, sans-serif;
+  gap: 10px;
+  padding: 0px;
+  background-color: var(--color-bg);
+}
+
+/* Menu container */
+.menu-container {
+  width: 200px;
+  height: 100%;
+  background-color: var(--color-menu);
+  color: white;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  flex: none;
+}
+
+.menu-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.menu-container li {
+  padding: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+  border-bottom: 1px solid var(--color-menu-hover);
+}
+
+.menu-container li:hover {
+  background-color: var(--color-menu-hover);
+}
+
+.menu-container li.active {
+  background-color: var(--color-menu-hover);
+  font-weight: bold;
+}
+
+/* Content container */
+.content-container {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: var(--color-bg);
+  border-radius: 20px;
+  width: 100%;
+}
+
+.content-container h2 {
+  text-align: center;
+  color: var(--color-primary);
+  font-size: 48px;
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 10px;
+}
+
+/* Card grid */
+.card-grid {
+  margin-top: 50px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Measurement card with enhanced styling */
+.measurement-card {
+  width: 400px;
+  min-height: 500px;
+  background: linear-gradient(135deg, #ffffff, #f9f9f9);
+  border: 3px solid var(--color-primary);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.measurement-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Card image */
+.card-img {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+/* Card title */
+.card-title {
+  font-size: 28px;
+  color: var(--color-text);
+  text-align: center;
+  margin: 10px 0;
+}
+
+/* Card text */
+.card-text {
+  font-size: 14px;
+  color: var(--color-text);
+  text-align: center;
+  margin: 20px 5px 5px;
+}
+
+/* Snapshot button style */
+.measurement-card button {
+  padding: 10px 20px;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  margin: 15px 0;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.measurement-card button:hover {
+  background-color: #389b87;
+}
+
+/* Measurement information styles */
+.measurement-info,
+.size-info {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.measurement-info p,
+.size-info p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: var(--color-text);
+}
+
+/* Popup container */
+.popup-container {
+  margin-top: 50px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Popup card */
+.popup-card {
+  width: 400px;
+  height: 500px;
+  border: 3px solid var(--color-primary);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-card);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Container for side-by-side layout of webcam and measurement card */
+.camera-card-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Webcam container: maintains a 16:9 ratio */
+.webcam-container {
+  width: 650px;         /* Adjust as needed */
+  height: 360px;        /* Approximate 16:9 ratio */
+  background: #000;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transform: rotate(90deg);
+  overflow: hidden;
+  margin-top: 120px;
+}
+
+
+.measurements-split-container {
+  display: flex; /* Arrange children (columns) in a row */
+  justify-content: space-between; /* Put space between columns */
+  gap: 1.5rem; /* Adjust gap between the left and right columns */
+  margin-top: 1rem; /* Space below the button */
+  width: 100%;
+}
+
+.measurements-column,
+.sizes-column {
+  flex: 1; /* Make each column take up equal space */
+  display: flex;
+  flex-direction: column; /* Stack items vertically within each column */
+  gap: 0.75rem; /* Adjust vertical gap between items within a column */
+}
+
+/* === Make sure these item styles still exist === */
+/* (You likely don't need to change these unless you want to) */
+.measurement-item {
+
+  padding: 0.8rem 1rem;
+  border-radius: 8px; /* Keep item rounding */
+  text-align: center;
+  border: 2px solid #389b87;
+}
+.measurement-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+
+.measurement-label {
+  font-size: 0.85rem;
+  color: #389b87;
+  margin-bottom: 0.4rem;
+  font-weight: 300;
+}
+
+.measurement-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #389b87;
+}
+
+.measurements-panel {
+  /* --- Add or modify these properties --- */
+  background-color: #405158; /* Set the desired background color */
+  border-radius: 20px;     /* Adjust the value for more/less rounding if needed */
+  /* --- End of changes --- */
+
+  /* Keep other existing styles you like, for example: */
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* Optional: keep shadow */
+  color: #fff; /* Ensure text remains visible */
+
+  /* Remove or comment out the old background and backdrop-filter if they existed */
+  /* background: rgba(255, 255, 255, 0.1); */
+  /* backdrop-filter: blur(10px); */
+}
+
+
+
+.measurement-item-empty {
+  background: transparent;
+  border: none;
+  /* visibility: hidden; /* Or use this instead of transparent background */
+}
+
+/* === START: Styles for Multi-Step Capture Process (Add to end of App.css) === */
+
+/* Wrapper for the whole process area (indicator + webcam/results) */
+.capture-process-container {
+  display: flex;
+  align-items: flex-start; /* Align items vertically at the top */
+  gap: 30px; /* Space between step indicator and main area */
+  padding: 10px 0; /* Vertical padding */
+  width: 100%;
+}
+
+/* Step Indicator (Left Side) */
+.step-indicator {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center text block vertically */
+  gap: 15px;
+  padding: 20px 15px;
+  border-right: 2px solid var(--color-primary, #ccc); /* Use variable or fallback */
+  min-height: 400px; /* Ensure it aligns well */
+  flex: 0 0 180px; /* Fixed width, don't grow/shrink */
+  margin-top: 30px; /* Align roughly with top of webcam/card area */
+}
+
+.step-item {
+  font-size: 1rem;
+  color: #888; /* Default color for inactive steps */
+  font-weight: 500;
+  transition: color 0.3s ease, font-weight 0.3s ease;
+  padding: 5px 0;
+  cursor: default; /* Indicate it's not clickable */
+}
+
+.step-item.step-active {
+  color: var(--color-primary, #4AAE9B); /* Highlight color from variable */
+  font-weight: 700;
+}
+
+/* Area for Webcam/Controls and Results Card (Right Side) */
+.webcam-and-results-area {
+  flex: 1; /* Take remaining space */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+}
+
+/* Layout container for Webcam and its button */
+.webcam-controls-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 650px; /* Control max webcam width */
+  margin-bottom: 20px;
+}
+
+/* Style for the Webcam component itself */
+/* Make sure the class name matches the one on your <Webcam> element */
+.webcam-component {
+  width: 100%;
+  height: auto; /* Auto height based on aspect ratio */
+  aspect-ratio: 16 / 9; /* Maintain aspect ratio */
+  border-radius: 10px;
+  margin-bottom: 15px;
+  background-color: #000; /* Black background */
+  border: 1px solid #444; /* Subtle border */
+  object-fit: cover; /* Cover the area */
+  transform: rotate(90deg);
+}
+
+/* Style for the snapshot button below the webcam */
+/* Make sure the class name matches the one on your snapshot button */
+.snapshot-button {
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background-color: var(--color-primary); /* Use variable */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  margin-top: 155px;
+}
+/* Specific hover state for snapshot button (if different from generic button hover) */
+.snapshot-button:hover:not(:disabled) {
+  background-color: #389b87; /* Darker primary, adjust if needed */
+}
+/* Specific disabled state for snapshot button */
+.snapshot-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Modifier class for the measurement card when showing results */
+/* Add this class alongside .measurement-card in your JSX */
+.measurement-card-results {
+  margin-top: 20px; /* Space when webcam disappears */
+  width: 100%; /* Take full width of its container */
+  max-width: 700px; /* Limit max width */
+  /* It will inherit base .measurement-card styles */
+  /* Add specific overrides here if needed */
+}
+
+/* Start Over Button */
+.start-over-button {
+   padding: 10px 20px;
+   margin-top: 20px; /* Add space above */
+   background-color: var(--color-menu-hover); /* Use menu hover color */
+   color: white;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.2s ease;
+   font-size: 1rem;
+}
+.start-over-button:hover {
+   background-color: var(--color-menu); /* Use base menu color on hover */
+}
+
+/* Loading Modal Styles */
+.loading-modal-overlay {
+  position: fixed; /* Cover the whole viewport */
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.65); /* Semi-transparent black overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's on top */
+}
+
+.loading-modal-content {
+  background-color: var(--color-bg-card); /* Use variable for card background */
+  padding: 30px 40px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.loading-modal-content p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: var(--color-text); /* Use variable for text color */
+}
+
+/* Basic Spinner CSS */
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1); /* Light track */
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: var(--color-primary); /* Use primary color for spinner */
+  margin: 0 auto; /* Center the spinner */
+  animation: spin 1s linear infinite; /* Animation definition below */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* === END: Styles for Multi-Step Capture Process === */
+
