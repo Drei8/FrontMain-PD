@@ -5,7 +5,7 @@ import React from 'react';
 function HomePage({ handleCardClick }) {
   return (
     <>
-      <h2 className="page-title">Pixle Fit</h2>
+      <h2 className="page-title">Pixel Fit</h2>
       <div className="card-grid">
         {/* Card 1 */}
         <div

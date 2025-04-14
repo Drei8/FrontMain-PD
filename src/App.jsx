@@ -14,6 +14,11 @@ function App() {
   const [sizes, setSizes] = useState({ /* ... initial '---' ... */ });
   const [selectedMenu, setSelectedMenu] = useState('Home');
   const [showCameraPermission, setShowCameraPermission] = useState(false);
+
+  const [selectedApparel, setSelectedApparel] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('Dress');
+  const [selectedImage, setSelectedImage] = useState(null);
+
   // const [showInformation, setShowInformation] = useState(false); // <-- Can likely remove if not used in new flow
   // const [showSnapshotPopUp, setShowSnapshotPopUp] = useState(false); // <-- Remove this, replaced by new flow
 
@@ -61,7 +66,77 @@ function App() {
     handleMenuClick(cardName);
   };
   // --- End Existing Functions ---
-
+  const apparelData = {
+    Dress: [
+      'Magenta Slipdress.jpg',
+      'Pink Layered Dress.jpg',
+      'Back Tie Midi Dress.jpg',
+      'Bow Accent Dress.jpg',
+      'Gothic Cape Dress.jpg',
+      'Midnight Bell Dress.jpg',
+      'Ruffle Shoulder Dress.jpg',
+      'Silk Champagne Gown.jpg',
+      'White Tulle Dress.jpg',
+      'Wine Flare Dress.jpg'
+    ],
+    Polos: [
+      'Black Patterned Polo.jpg',
+      'Brown Patterned Polo.jpg',
+      'Colorblock Champion Polo.jpg',
+      'Cream Polo.jpg',
+      'Peach Classic Polo.jpg',
+      'Pink Youth Polo.jpg',
+      'Retro Stripe Polo.jpg',
+      'Soft Beige Polo.png'
+    ],
+    Pants: [
+      'Beige Chino Pants.jpg',
+      'Black High Waist Pants.jpg',
+      'Classic Blue Jeans.jpg',
+      'Black Lounge Pants.jpg',
+      'Olive Linen Pants.jpg',
+      'Navy Tapered Pants.jpg',
+      'Brown Cargo Pants.jpg',
+      'Red Drawstring Pants.jpg',
+      'Olive Cargo Pants.jpg',
+      'Tan Denim Pants.jpg'
+    ],
+    Shorts: [
+      'Aqua Cuffed Shorts.jpg',
+      'Army Green Loose Shorts.jpg',
+      'Black Relaxed Shorts.png',
+      'Forest Drawstring Shorts.jpg',
+      'Khaki Flat Front Shorts.jpg',
+      'Navy Utility Shorts.jpg',
+      'Ocean Blue Chino Shorts.jpg',
+      'Washed Denim Shorts.jpg'
+    ],
+    Sweater: [
+      'Blue Pinstripe Knit.jpg',
+      'Brown Green Stripe Knit.jpg',
+      'Charcoal Ribbed Sweater.jpg',
+      'Cream Striped Knit.jpg',
+      'Ivory Cable Sweater.jpg',
+      'Navy Dark Sweater.jpg',
+      'Navy Knit Sweater.jpg',
+      'Nordic Holiday Sweater.jpg',
+      'Retro Chevron Sweater.jpg',
+      'Solid Green Pullover.jpg'
+    ],
+    TShirt: [
+      'Black Dragon Wave Tee.png',
+      'Bold Red Tee.jpg',
+      'Cobalt Blue Tee.jpg',
+      'Gray Shadow Dragon Tee.jpg',
+      'Peak Green Graphic Tee.jpg'
+    ]
+  };
+  
+  
+  
+  
+  
+  
 
   // --- Modified handleSnapshot Function ---
   const handleSnapshot = () => {
@@ -169,7 +244,7 @@ function App() {
         {selectedMenu === 'Home' && (
             // ... Home Section JSX remains the same ...
             <>
-            <h2 className="page-title">Pixle Fit</h2>
+            <h2 className="page-title">Pixel Fit</h2>
             <div className="card-grid">
               {/* Card 1 */}
               <div
@@ -370,7 +445,51 @@ function App() {
         {selectedMenu === 'Try On' && <h2>Try On</h2>}
 
         {/* Closet Section */}
-        {selectedMenu === 'Closet' && <h2>Closet</h2>}
+        {selectedMenu === 'Closet' && (
+      <>
+      <h2 className="page-title">Closet</h2>
+
+      {/* Category Tabs */}
+      <div className="category-tabs">
+        {['Dress', 'Polos', 'Pants', 'Shorts', 'Sweater', 'TShirt'].map((category) => (
+          <button
+            key={category}
+            className={`category-button ${selectedCategory === category ? 'active' : ''}`}
+            onClick={() => setSelectedCategory(category)}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      {/* Apparel Selection Grid */}
+            <div className="closet-grid">
+        {apparelData[selectedCategory].map((img, index) => {
+          const path = `/src/assets/closet/${selectedCategory.toLowerCase()}/${img}`;
+          const displayName = img.replace(/\.(png|jpg|jpeg)$/i, ''); // remove extension
+          return (
+            <div
+              key={index}
+              className={`closet-item ${selectedImage === img ? 'selected' : ''}`}
+              onClick={() => {
+                setSelectedImage(img);
+                setSelectedApparel(path);
+              }}
+            > <div className="closet-image-wrapper">
+            <img src={path} alt={img} className="closet-thumbnail" />
+            <div className="closet-overlay">Select</div>
+          </div>
+          <div className="closet-label">{displayName}</div>
+        </div>
+          );
+        })}
+      </div>
+
+    </>
+
+
+)}
+
       </div>
     </div>
   );
